@@ -31,7 +31,6 @@ func main() {
 		if r.Method == "GET" {
 
 			hashUrl := path.Base(r.URL.Path)
-			println("path: ", hashUrl)
 			result, err := usecase.GetOriginUrlFromRedirect(hashUrl)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)

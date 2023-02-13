@@ -1,9 +1,12 @@
 package data
 
-import "database/sql"
+import (
+	"database/sql"
+	"os"
+)
 
 func ConnectionDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", "postgres://postgres:docker@localhost:5432/postgres?sslmode=disable")
+	db, err := sql.Open("postgres", os.Getenv("CONNECT_DB"))
 	if err != nil {
 		println("error when try open database")
 		panic(err.Error())
