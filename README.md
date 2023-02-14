@@ -30,6 +30,19 @@
    - Baixar todas as dependências `go mod download`
    - Rodar o projeto `go run cmd/main.go`
 
+## Como rodar o projeto apartir da imagem **Docker**
+
+1. Puxe a imagem no [Docker Hub](https://hub.docker.com/r/rickchaves29/url_shortener)
+
+    `docker pull rickchaves29/url_shortener:<tag de versão>`
+
+2. Crie um container baseado na imagem
+
+    ```bash
+    docker run --name 'name of container' -e CONNECT_DB='url from connect from database' \
+    -p 3030:3030 rickchaves29/url_shortener:'tag version' 
+    ```
+
 ## Rotas da API
 
 ### POST - /api/code
