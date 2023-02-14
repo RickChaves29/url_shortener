@@ -1,0 +1,5 @@
+/README.md
+/.git
+/.gitignore
+*_test.go
+/.env.example
