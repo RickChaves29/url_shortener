@@ -2,9 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"path"
+	"regexp"
 
 	"github.com/RickChaves29/url_shortener/internal/data"
 	"github.com/RickChaves29/url_shortener/internal/domain"
@@ -17,6 +19,10 @@ type UrlInput struct {
 
 type UrlOutput struct {
 	HashUrl string `json:"hashUrl"`
+}
+
+type Response struct {
+	Message string `json:"message"`
 }
 
 func main() {
@@ -40,16 +46,27 @@ func main() {
 		}
 		if r.Method == "POST" {
 			var urlInput *UrlInput
-
 			json.NewDecoder(r.Body).Decode(&urlInput)
-			hashUrl, err := usecase.CreateNewUrl(urlInput.OriginUrl)
+			result, err := regexp.MatchString(`(?:https?:\/\/)`, urlInput.OriginUrl)
 			if err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				log.Fatal(err.Error())
+				fmt.Printf("regex error: %v", err.Error())
 			}
-			urlOutput := UrlOutput{HashUrl: hashUrl}
-			w.WriteHeader(http.StatusCreated)
-			json.NewEncoder(w).Encode(&urlOutput)
+			if !result {
+				fmt.Printf("warn: url format is incorrect")
+				w.WriteHeader(http.StatusBadRequest)
+				message := Response{Message: "url format is incorrect should have http:// or https://"}
+				json.NewEncoder(w).Encode(&message)
+			} else {
+				hashUrl, err := usecase.CreateNewUrl(urlInput.OriginUrl)
+				if err != nil {
+					w.WriteHeader(http.StatusInternalServerError)
+					log.Fatal(err.Error())
+				}
+				urlOutput := UrlOutput{HashUrl: hashUrl}
+				w.WriteHeader(http.StatusCreated)
+				json.NewEncoder(w).Encode(&urlOutput)
+
+			}
 		}
 	})
 	println("Server runnig on http://localhost:3030/api/code")
