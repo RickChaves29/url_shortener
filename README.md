@@ -43,6 +43,21 @@
     -p 3030:3030 rickchaves29/url_shortener:'tag version' 
     ```
 
+## Criação da tabela no banco de daos
+
+> OBS: Caso não exista a tabela criada no banco de dados, a tabela é criada automaticamente pela aplicação
+
+Caso queira criar a tabela diretamente pela CLI do Postgres ou usando algum
+database manager, digite o seguinte comando SQL:
+
+```sql
+CREATE TABLE IF NOT EXISTS url (
+id SERIAL PRIMARY KEY,
+origin_url TEXT NOT NULL,
+hash_url VARCHAR(6) UNIQUE NOT NULL  
+)
+```
+
 ## Rotas da API
 
 ### POST - /api/code
