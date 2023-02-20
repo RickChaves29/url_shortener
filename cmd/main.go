@@ -88,6 +88,6 @@ func main() {
 			}
 		}
 	})
-	println("Server runnig on http://localhost:3030/api/code")
+	log.Println("SERVER: Server runnig on http://localhost:3030/api/code")
 	http.ListenAndServe(":3030", nil)
 }
