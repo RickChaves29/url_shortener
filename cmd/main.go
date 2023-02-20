@@ -24,6 +24,24 @@ type Response struct {
 	Message string `json:"message"`
 }
 
+func init() {
+	conn, err := data.ConnectionDB()
+	if err != nil {
+		log.Printf("ERROR DATABASE: %v\n", err.Error())
+	}
+	_, err = conn.Exec(`
+		CREATE TABLE IF NOT EXISTS url (
+		id SERIAL PRIMARY KEY,
+		origin_url TEXT NOT NULL,
+	 	hash_url VARCHAR(6) UNIQUE NOT NULL  
+   		)
+	`)
+	if err != nil {
+		log.Printf("ERROR DATABASE: no successfully create url table, %v", err.Error())
+	}
+	log.Println("DATABASE: successfully create url table")
+}
+
 func main() {
 	conn, err := data.ConnectionDB()
 	if err != nil {
