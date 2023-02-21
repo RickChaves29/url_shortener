@@ -43,6 +43,22 @@
     -p 3030:3030 rickchaves29/url_shortener:'tag version' 
     ```
 
+## Como rodar o projeto usando o **Docker Compose** no modo de desenvolvimento
+
+>OBS: Por Padrão o Docker Compose sempre ir chamar o arquivo **compose.yaml**
+
+1. Clonar esse repositório pelo terminal
+   - Via HTTP
+     `git clone https://github.com/RickChaves29/url_shortener.git`
+   - Via SSH
+     `git clone git@github.com:RickChaves29/url_shortener.git`
+2. Ao entrar na pasta do projeto rode o seguinte comando no terminal
+
+   - Para subir os containers `docker compose up --remove-orphans`
+   - Para remove os containers `docker compose down`
+
+  >OBS: A flag **--remove-orphans** é opcinal, ela remove todos snapshots criados pelo comando up
+
 ## Criação da tabela no banco de daos
 
 > OBS: Caso não exista a tabela criada no banco de dados, a tabela é criada automaticamente pela aplicação
