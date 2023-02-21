@@ -14,10 +14,10 @@ func ConnectionDB() (*sql.DB, error) {
 
 	err = db.Ping()
 	if err != nil {
-		log.Println("error when try connection on database")
+		log.Println("ERROR DATABASE: error when try connection on database")
+	} else {
+		log.Println("DATABASE: connection on database is good")
 	}
-
-	log.Println("connection on database is good")
 
 	return db, err
 }
